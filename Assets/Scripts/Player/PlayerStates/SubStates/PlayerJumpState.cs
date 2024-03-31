@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerJumpState : PlayerAbilitiesState
 {
     private int amountOfJumpsLeft;
+    private bool isDoubleJump;
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         amountOfJumpsLeft = playerData.amountOfJumps;
@@ -12,6 +13,10 @@ public class PlayerJumpState : PlayerAbilitiesState
     public override void Enter()
     {
         base.Enter();
+        if (isDoubleJump)
+        {
+            player.Anim.SetTrigger("doubleJump");
+        }
         player.SetVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
         DescreaseAmountOfJumpsLeft();

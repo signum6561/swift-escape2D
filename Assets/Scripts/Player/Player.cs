@@ -12,16 +12,16 @@ public class Player : MonoBehaviour
     public PlayerJumpState JumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
-    public PlayerDoubleJumpState DoubleJumpState { get; private set; }
+    public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
-
     public Animator Anim { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
+    public int flipX;
     private Vector2 workspace;
-    private int flipX;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform wallCheck;
     [SerializeField] private PlayerData playerData;
     public void Awake()
     {
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallJump");
     }
     private void Start()
     {
@@ -55,19 +56,32 @@ public class Player : MonoBehaviour
     }
     public void SetVelocityX(float velocity)
     {
-        workspace.Set(velocity, CurrentVelocity.y);
+        // Debug.Log($"{origin} set velocityX => {velocity}");
+        SetWorkspace(velocity, CurrentVelocity.y);
         Rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
     public void SetVelocityY(float velocity)
     {
-        workspace.Set(CurrentVelocity.x, velocity);
+        SetWorkspace(CurrentVelocity.x, velocity);
+        Rb.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
+    public void SetVelocity(float velocity, Vector2 angle, int direction)
+    {
+        angle.Normalize();
+        workspace.Set(angle.x * velocity * direction, angle.y * velocity);
         Rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
     public bool CheckGround()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.groundLayerMask);
+    }
+    public bool CheckWall()
+    {
+        // Debug.DrawRay(wallCheck.position, Vector2.right * flipX, Color.red, playerData.wallCheckDistance);
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * flipX, playerData.wallCheckDistance, playerData.groundLayerMask);
     }
     public void HandleFlip(int inputX)
     {

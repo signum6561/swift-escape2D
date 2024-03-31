@@ -9,8 +9,8 @@ public class PlayerInAirState : PlayerState
     private bool jumpInput;
     private bool jumpInputStop;
     private bool isCoyoteTimeStart;
+    private bool isTouchingWall;
     private bool isJumping;
-    private bool isCanJump;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -18,11 +18,11 @@ public class PlayerInAirState : PlayerState
     {
         base.HandleChecks();
         isGrounded = player.CheckGround();
+        isTouchingWall = player.CheckWall();
     }
     public override void Enter()
     {
         base.Enter();
-        isCanJump = player.JumpState.CanJump();
     }
     public override void LogicUpdate()
     {
@@ -42,9 +42,16 @@ public class PlayerInAirState : PlayerState
         }
         else if (jumpInput && player.JumpState.CanJump())
         {
-            player.Anim.SetTrigger("doubleJump");
+            if (!isTouchingWall)
+            {
+                player.Anim.SetTrigger("doubleJump");
+            }
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
+        }
+        else if (isTouchingWall && inputX == player.flipX && player.CurrentVelocity.y <= 0)
+        {
+            stateMachine.ChangeState(player.WallSlideState);
         }
         else
         {
