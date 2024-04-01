@@ -15,10 +15,9 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
-    public SpriteRenderer SpriteRenderer { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
-    public int flipX;
+    public int FlipX { get; private set; }
     private Vector2 workspace;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
@@ -31,14 +30,14 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
-        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallJump");
+        WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
     }
     private void Start()
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
-        SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        FlipX = 1;
         StateMachine.initialize(IdleState);
     }
     private void Update()
@@ -81,14 +80,14 @@ public class Player : MonoBehaviour
     public bool CheckWall()
     {
         // Debug.DrawRay(wallCheck.position, Vector2.right * flipX, Color.red, playerData.wallCheckDistance);
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * flipX, playerData.wallCheckDistance, playerData.groundLayerMask);
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * FlipX, playerData.wallCheckDistance, playerData.groundLayerMask);
     }
     public void HandleFlip(int inputX)
     {
-        if (inputX != 0 && inputX != flipX)
+        if (inputX != 0 && inputX != FlipX)
         {
-            flipX = inputX;
-            SpriteRenderer.flipX = (flipX != 1);
+            FlipX *= -1;
+            transform.Rotate(0f, 180f, 0f);
         }
     }
     public void TriggerAnimationEnter() => StateMachine.currentState.TriggerAnimationEnter();

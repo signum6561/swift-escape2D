@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerJumpState : PlayerAbilitiesState
 {
     private int amountOfJumpsLeft;
-    private bool isDoubleJump;
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
         amountOfJumpsLeft = playerData.amountOfJumps;
@@ -13,20 +12,16 @@ public class PlayerJumpState : PlayerAbilitiesState
     public override void Enter()
     {
         base.Enter();
-        if (isDoubleJump)
-        {
-            player.Anim.SetTrigger("doubleJump");
-        }
         player.SetVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
-        DescreaseAmountOfJumpsLeft();
+        DescreaseAmountOfJumps();
         player.InAirState.SetIsJumping();
     }
     public bool CanJump()
     {
-        Debug.Log(amountOfJumpsLeft);
         return amountOfJumpsLeft > 0;
     }
     public void ResetAmountOfJumpLeft() => amountOfJumpsLeft = playerData.amountOfJumps;
-    public void DescreaseAmountOfJumpsLeft() => amountOfJumpsLeft--;
+    public void DescreaseAmountOfJumps() => amountOfJumpsLeft--;
+    public void IncreaseAmountOfJumps() => amountOfJumpsLeft++;
 }

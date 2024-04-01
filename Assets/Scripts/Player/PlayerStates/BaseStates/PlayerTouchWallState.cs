@@ -29,7 +29,7 @@ public class PlayerTouchWallState : PlayerState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (!isTouchingWall || inputX != player.flipX)
+        else if (!isTouchingWall || inputX != player.FlipX)
         {
             stateMachine.ChangeState(player.InAirState);
         }

@@ -19,7 +19,7 @@ MonoBehaviour:
   coyoteTime: 0.5
   variableJumpHeightMultipler: 4
   clampFallSpeed: 30
-  wallSlideVelocity: 3
+  wallSlideVelocity: 2
   groundCheckRadius: 0.3
   wallCheckDistance: 1
   groundLayerMask:

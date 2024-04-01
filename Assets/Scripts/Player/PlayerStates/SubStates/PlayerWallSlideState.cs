@@ -10,14 +10,15 @@ public class PlayerWallSlideState : PlayerTouchWallState
     public override void Enter()
     {
         base.Enter();
-        player.JumpState.ResetAmountOfJumpLeft();
     }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
         player.SetVelocityY(-playerData.wallSlideVelocity);
-        if (jumpInput)
+        if (jumpInput && isAnimationFinished)
         {
+            player.InputHandler.UseJumpInput();
+            player.JumpState.ResetAmountOfJumpLeft();
             stateMachine.ChangeState(player.JumpState);
         }
 

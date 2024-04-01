@@ -49,7 +49,7 @@ public class PlayerInAirState : PlayerState
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
         }
-        else if (isTouchingWall && inputX == player.flipX && player.CurrentVelocity.y <= 0)
+        else if (isTouchingWall && inputX == player.FlipX && player.CurrentVelocity.y <= 0)
         {
             stateMachine.ChangeState(player.WallSlideState);
         }
@@ -90,7 +90,7 @@ public class PlayerInAirState : PlayerState
         if (isCoyoteTimeStart && Time.time > startTime + playerData.coyoteTime)
         {
             isCoyoteTimeStart = false;
-            player.JumpState.DescreaseAmountOfJumpsLeft();
+            player.JumpState.DescreaseAmountOfJumps();
         }
     }
     public void StartCoyoteTime() => isCoyoteTimeStart = true;
