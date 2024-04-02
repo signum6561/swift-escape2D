@@ -22,15 +22,15 @@ public class FallingPlatform : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(DeactiveAfter());
-        }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            col.isTrigger = true;
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (player.StateMachine.CurrentState is PlayerGroundedState)
+            {
+                StartCoroutine(DeactiveAfter());
+            }
         }
     }
 }

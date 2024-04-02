@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
+    public PlayerKnockbackState KnockbackState { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
     public Rigidbody2D Rb { get; private set; }
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
+        KnockbackState = new PlayerKnockbackState(this, StateMachine, playerData, "hit");
     }
     private void Start()
     {
@@ -43,11 +45,11 @@ public class Player : MonoBehaviour
     private void Update()
     {
         CurrentVelocity = Rb.velocity;
-        StateMachine.currentState.LogicUpdate();
+        StateMachine.CurrentState.LogicUpdate();
     }
     private void FixedUpdate()
     {
-        StateMachine.currentState.PhysicsUpdate();
+        StateMachine.CurrentState.PhysicsUpdate();
     }
     private void SetWorkspace(float x, float y)
     {
@@ -90,11 +92,12 @@ public class Player : MonoBehaviour
             transform.Rotate(0f, 180f, 0f);
         }
     }
-    public void TriggerAnimationEnter() => StateMachine.currentState.TriggerAnimationEnter();
-    public void TriggerAnimationExit() => StateMachine.currentState.TriggerAnimationExit();
+    public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
+    public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, playerData.groundCheckRadius);
+        Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(FlipX * playerData.wallCheckDistance * Vector2.right));
     }
 }

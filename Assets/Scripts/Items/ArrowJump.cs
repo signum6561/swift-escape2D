@@ -8,5 +8,7 @@ public class ArrowJump : Item
     {
         base.OnHitPlayerEnter(player);
         player.JumpState.IncreaseAmountOfJumps();
+        player.StateMachine.ChangeState(player.JumpState);
+
     }
 }
