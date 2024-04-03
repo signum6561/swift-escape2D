@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4682705187682610485}
   - component: {fileID: 3578442876152224156}
   m_Layer: 6
-  m_Name: Falling Platform
+  m_Name: FallingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

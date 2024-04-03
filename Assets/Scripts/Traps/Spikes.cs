@@ -8,9 +8,8 @@ public class Spikes : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Player player = col.GetComponent<Player>();
-            player.KnockbackState.SetTargetPos(transform.position);
-            player.StateMachine.ChangeState(player.KnockbackState);
+            IDamageable damageable = col.GetComponent<IDamageable>();
+            damageable?.TakeDamage(1);
         }
     }
 }

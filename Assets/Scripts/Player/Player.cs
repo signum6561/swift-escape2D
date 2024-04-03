@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -14,12 +14,18 @@ public class Player : MonoBehaviour
     public PlayerLandState LandState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerKnockbackState KnockbackState { get; private set; }
+    public PlayerDeathState DeathState { get; private set; }
+
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
     public Rigidbody2D Rb { get; private set; }
+    public SpriteRenderer Spr { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
     public int FlipX { get; private set; }
     private Vector2 workspace;
+    private bool isDamageable;
+    private Coroutine flashCo;
+    public int Health { get; private set; }
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private PlayerData playerData;
@@ -33,13 +39,18 @@ public class Player : MonoBehaviour
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
         KnockbackState = new PlayerKnockbackState(this, StateMachine, playerData, "hit");
+        DeathState = new PlayerDeathState(this, StateMachine, playerData, "dead");
+
     }
     private void Start()
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
+        Spr = GetComponent<SpriteRenderer>();
+        isDamageable = true;
         FlipX = 1;
+        Health = playerData.health;
         StateMachine.initialize(IdleState);
     }
     private void Update()
@@ -75,6 +86,12 @@ public class Player : MonoBehaviour
         Rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
+    public void ResetVelocity()
+    {
+        workspace.Set(0f, 0f);
+        Rb.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     public bool CheckGround()
     {
         return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.groundLayerMask);
@@ -92,6 +109,28 @@ public class Player : MonoBehaviour
             transform.Rotate(0f, 180f, 0f);
         }
     }
+    public void SetImmortal()
+    {
+        if (flashCo != null)
+            return;
+        flashCo = StartCoroutine(ImmortalCo());
+    }
+    private IEnumerator ImmortalCo()
+    {
+        StartCoroutine(Flash());
+        yield return new WaitForSeconds(1f);
+        StopAllCoroutines();
+        flashCo = null;
+        isDamageable = true;
+    }
+    private IEnumerator Flash()
+    {
+        Spr.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        Spr.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(Flash());
+    }
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
     public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
     void OnDrawGizmosSelected()
@@ -99,5 +138,22 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, playerData.groundCheckRadius);
         Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(FlipX * playerData.wallCheckDistance * Vector2.right));
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isDamageable)
+        {
+            Health--;
+            isDamageable = false;
+            if (Health <= 0)
+            {
+                StateMachine.ChangeState(DeathState);
+            }
+            else
+            {
+                StateMachine.ChangeState(KnockbackState);
+            }
+        }
     }
 }

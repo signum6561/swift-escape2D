@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class PlayerKnockbackState : PlayerState
+public class PlayerKnockbackState : PlayerState, IKnockable
 {
-    // private Coroutine knockRoutine;
     private Vector2 targetPos;
     public PlayerKnockbackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -13,19 +12,23 @@ public class PlayerKnockbackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        KnockBack();
+        KnockBack(targetPos, playerData.knockbackForce, 1);
+    }
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        if (isAnimationFinished)
+        {
+            player.ResetVelocity();
+            player.SetImmortal();
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
     public void SetTargetPos(Vector2 targetPos) => this.targetPos = targetPos;
-    public void KnockBack()
+    public void KnockBack(Vector2 targetPos, float knockbackForce, int direction)
     {
-
-
+        Vector2 angle = (Vector2)player.transform.position - targetPos;
+        player.SetVelocity(knockbackForce, angle, direction);
+        player.SetVelocityY(15f);
     }
-    private IEnumerator KnockCo(float knockbackTime)
-    {
-        yield return new WaitForSeconds(knockbackTime);
-        // knockRoutine = null;
-        stateMachine.ChangeState(player.IdleState);
-    }
-
 }

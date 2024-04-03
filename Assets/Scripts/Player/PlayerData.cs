@@ -5,12 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Stat")]
+    public int health;
     [Header("Movement")]
     public float movementVelocity = 8f;
     [Header("Jump")]
     public float jumpVelocity = 10f;
     public float doubleJumpVelocity = 10f;
     public int amountOfJumps = 1;
+
+    [Header("Knockback")]
+    public float knockbackForce = 5f;
 
     [Header("In Air")]
     public float coyoteTime = 0.2f;
