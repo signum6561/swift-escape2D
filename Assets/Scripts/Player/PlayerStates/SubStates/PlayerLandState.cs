@@ -22,4 +22,9 @@ public class PlayerLandState : PlayerGroundedState
             }
         }
     }
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        player.ResetVelocity();
+    }
 }

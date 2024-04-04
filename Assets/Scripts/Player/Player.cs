@@ -148,6 +148,7 @@ public class Player : MonoBehaviour, IDamageable
             isDamageable = false;
             if (Health <= 0)
             {
+                Rb.bodyType = RigidbodyType2D.Kinematic;
                 StateMachine.ChangeState(DeathState);
             }
             else
