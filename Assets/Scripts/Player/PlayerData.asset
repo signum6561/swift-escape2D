@@ -17,7 +17,8 @@ MonoBehaviour:
   jumpVelocity: 25
   doubleJumpVelocity: 20
   amountOfJumps: 2
-  coyoteTime: 0.5
+  knockbackForce: 5
+  coyoteTime: 0.2
   variableJumpHeightMultipler: 4
   clampFallSpeed: 30
   wallSlideVelocity: 2

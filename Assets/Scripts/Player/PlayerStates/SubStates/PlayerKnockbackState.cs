@@ -20,7 +20,6 @@ public class PlayerKnockbackState : PlayerState, IKnockable
         if (isAnimationFinished)
         {
             player.ResetVelocity();
-            player.SetImmortal();
             stateMachine.ChangeState(player.IdleState);
         }
     }

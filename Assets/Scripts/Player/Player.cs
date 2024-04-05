@@ -19,12 +19,11 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
     public Rigidbody2D Rb { get; private set; }
-    public SpriteRenderer Spr { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
     public int FlipX { get; private set; }
     private Vector2 workspace;
     private bool isDamageable;
-    private Coroutine flashCo;
+    private Coroutine immortalCo;
     public int Health { get; private set; }
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
@@ -47,7 +46,6 @@ public class Player : MonoBehaviour, IDamageable
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
-        Spr = GetComponent<SpriteRenderer>();
         isDamageable = true;
         FlipX = 1;
         Health = playerData.health;
@@ -111,25 +109,15 @@ public class Player : MonoBehaviour, IDamageable
     }
     public void SetImmortal()
     {
-        if (flashCo != null)
+        if (immortalCo != null)
             return;
-        flashCo = StartCoroutine(ImmortalCo());
+        immortalCo = StartCoroutine(ImmortalCo());
     }
     private IEnumerator ImmortalCo()
     {
-        StartCoroutine(Flash());
         yield return new WaitForSeconds(1f);
-        StopAllCoroutines();
-        flashCo = null;
+        immortalCo = null;
         isDamageable = true;
-    }
-    private IEnumerator Flash()
-    {
-        Spr.enabled = false;
-        yield return new WaitForSeconds(0.1f);
-        Spr.enabled = true;
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(Flash());
     }
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
     public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
@@ -139,13 +127,23 @@ public class Player : MonoBehaviour, IDamageable
         Gizmos.DrawWireSphere(groundCheck.position, playerData.groundCheckRadius);
         Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(FlipX * playerData.wallCheckDistance * Vector2.right));
     }
-
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            JumpState.ResetAmountOfJumpLeft();
+            StateMachine.ChangeState(JumpState);
+            IDamageable damageable = col.GetComponent<IDamageable>();
+            damageable?.TakeDamage(1);
+        }
+    }
     public void TakeDamage(int damage)
     {
         if (isDamageable)
         {
             Health--;
             isDamageable = false;
+            SetImmortal();
             if (Health <= 0)
             {
                 Rb.bodyType = RigidbodyType2D.Kinematic;

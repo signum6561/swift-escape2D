@@ -23,5 +23,5 @@ public class PlayerJumpState : PlayerAbilitiesState
     }
     public void ResetAmountOfJumpLeft() => amountOfJumpsLeft = playerData.amountOfJumps;
     public void DescreaseAmountOfJumps() => amountOfJumpsLeft--;
-    public void IncreaseAmountOfJumps() => amountOfJumpsLeft++;
+    public void SetAmountOfJumps(int value) => amountOfJumpsLeft = value;
 }

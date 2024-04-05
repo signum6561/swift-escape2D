@@ -7,7 +7,7 @@ public class ArrowJump : Item
     protected override void OnHitPlayerEnter(Player player)
     {
         base.OnHitPlayerEnter(player);
-        player.JumpState.IncreaseAmountOfJumps();
+        player.JumpState.SetAmountOfJumps(1);
         player.StateMachine.ChangeState(player.JumpState);
 
     }

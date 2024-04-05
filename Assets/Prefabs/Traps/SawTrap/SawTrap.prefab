@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cycleLoop: 0
   chainVisible: 0
-  sawSpeed: 3
-  sawPrefab: {fileID: 170139139004407135, guid: e427339b172726547a39be79431d8bb5, type: 3}
+  objectSpeed: 0
+  objectPrefab: {fileID: 170139139004407135, guid: e427339b172726547a39be79431d8bb5, type: 3}
   chainPrefab: {fileID: 7397388229011090240, guid: de71195db9e2e82438ba702b4070a78f, type: 3}
-  SawPoints: []
+  MovePoints: []
