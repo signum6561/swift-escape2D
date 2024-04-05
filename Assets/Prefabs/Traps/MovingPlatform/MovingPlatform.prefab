@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5678797318917508546
+--- !u!1 &1188623420164267337
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1418153589999590322}
-  - component: {fileID: 2271649362746253792}
+  - component: {fileID: 1686244106851928935}
+  - component: {fileID: 2858895889440388227}
   m_Layer: 0
-  m_Name: SawTrap
+  m_Name: MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &1418153589999590322
+--- !u!4 &1686244106851928935
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678797318917508546}
+  m_GameObject: {fileID: 1188623420164267337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,21 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2271649362746253792
+--- !u!114 &2858895889440388227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5678797318917508546}
+  m_GameObject: {fileID: 1188623420164267337}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c986aa38c9097d48ba820b64be8ae6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLoop: 0
-  chainVisible: 0
+  chainVisible: 1
   objectSpeed: 3
-  objectPrefab: {fileID: 170139139004407135, guid: e427339b172726547a39be79431d8bb5, type: 3}
-  chainPrefab: {fileID: 7397388229011090240, guid: de71195db9e2e82438ba702b4070a78f, type: 3}
+  objectPrefab: {fileID: 6876929486566443014, guid: 8a80884e51c2ec14f99cf2a950a810ea, type: 3}
+  chainPrefab: {fileID: 8326035226514888244, guid: 7f09a468871da8946b352b5dd1cc4520, type: 3}
   MovePoints: []
