@@ -14,7 +14,7 @@ public class BlueBird : FlyingEnemy
     protected override void Start()
     {
         base.Start();
-        SwitchState(State.Move);
+        InitializeState(State.Move);
     }
     protected override void IdleEnter()
     {

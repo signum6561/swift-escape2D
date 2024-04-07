@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IDamageable
     public BoxCollider2D Col { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
     public int FlipX { get; private set; }
+
     private Vector2 workspace;
     private bool isDamageable;
     private Coroutine immortalCo;
@@ -49,9 +50,10 @@ public class Player : MonoBehaviour, IDamageable
         Rb = GetComponent<Rigidbody2D>();
         Col = GetComponent<BoxCollider2D>();
         isDamageable = true;
+        StateMachine.SetAlive(true);
         FlipX = 1;
         Health = playerData.health;
-        StateMachine.initialize(IdleState);
+        StateMachine.Initialize(IdleState);
     }
     private void Update()
     {
@@ -165,6 +167,8 @@ public class Player : MonoBehaviour, IDamageable
             {
                 Rb.bodyType = RigidbodyType2D.Kinematic;
                 StateMachine.ChangeState(DeathState);
+                StateMachine.SetAlive(false);
+
             }
             else
             {

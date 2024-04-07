@@ -16,7 +16,7 @@ public class Duck : GroundedEnemy
     protected override void Start()
     {
         base.Start();
-        SwitchState(State.Idle);
+        InitializeState(State.Idle);
     }
     protected override void IdleEnter()
     {

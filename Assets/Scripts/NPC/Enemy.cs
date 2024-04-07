@@ -25,13 +25,22 @@ public class Enemy : MonoBehaviour, IDamageable
         InAir
     };
     public State CurrentState { get; private set; }
-    protected string currentAnim = "idle";
+    protected string currentAnim;
     public void SwitchState(State newState)
     {
         if (!IsAlive)
             return;
         Anim.SetBool(currentAnim, false);
         CurrentState = newState;
+        SelectEnterState();
+    }
+    protected void InitializeState(State startState)
+    {
+        CurrentState = startState;
+        SelectEnterState();
+    }
+    private void SelectEnterState()
+    {
         switch (CurrentState)
         {
             case State.Idle:

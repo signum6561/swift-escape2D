@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 5944494043572959955}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.71, y: 2.43, z: 0}
+  m_LocalPosition: {x: 0.77, y: 2.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -303,9 +303,9 @@ MonoBehaviour:
   distanceWallCheck: 0.5
   radiusGroundCheck: 0.6
   waitTime: 0.5
-  movementVelocity: 8
-  clampMovementVelocity: 10
+  movementVelocity: 6
+  clampVelocity: 10
   jumpVelocity: 30
   jumpDuration: 0.5
   heightCheck: {fileID: 2194737461499120278}
-  distanceHeightCheck: 2
+  distanceHeightCheck: 4
