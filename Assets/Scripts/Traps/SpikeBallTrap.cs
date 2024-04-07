@@ -40,10 +40,10 @@ public class SpikeBallTrap : MonoBehaviour
     }
     private void Update()
     {
+        tempAnglePoint = CalculatePointOnArc2D(tempAngle);
         spikeBallPos.position = tempAnglePoint;
         tempAngle += angularSpeed * 10f * Time.deltaTime;
         tempAngle %= 360f;
-        tempAnglePoint = CalculatePointOnArc2D(tempAngle);
         // spikeBallPos.RotateAround(transform.position, Vector3.forward, angularSpeed * Time.fixedDeltaTime);
         // chainPos.RotateAround(transform.position, Vector3.forward, angularSpeed * Time.fixedDeltaTime);
         chainPos.right = spikeBallPos.position - transform.position;

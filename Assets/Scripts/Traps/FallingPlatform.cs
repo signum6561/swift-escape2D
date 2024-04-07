@@ -24,7 +24,7 @@ public class FallingPlatform : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.layer == (int)LayerIndex.Player)
         {
             Player player = collision.gameObject.GetComponent<Player>();
             if (player.StateMachine.CurrentState is PlayerGroundedState)

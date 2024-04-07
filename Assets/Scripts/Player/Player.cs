@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
     public Rigidbody2D Rb { get; private set; }
+    public BoxCollider2D Col { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
     public int FlipX { get; private set; }
     private Vector2 workspace;
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour, IDamageable
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
+        Col = GetComponent<BoxCollider2D>();
         isDamageable = true;
         FlipX = 1;
         Health = playerData.health;
@@ -115,7 +117,7 @@ public class Player : MonoBehaviour, IDamageable
     }
     private IEnumerator ImmortalCo()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         immortalCo = null;
         isDamageable = true;
     }
@@ -129,7 +131,7 @@ public class Player : MonoBehaviour, IDamageable
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.layer == (int)LayerIndex.Enemy)
         {
             JumpState.ResetAmountOfJumpLeft();
             StateMachine.ChangeState(JumpState);
@@ -137,6 +139,21 @@ public class Player : MonoBehaviour, IDamageable
             damageable?.TakeDamage(1);
         }
     }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.layer == (int)LayerIndex.Platform && StateMachine.CurrentState is PlayerGroundedState)
+        {
+            transform.SetParent(col.transform);
+        }
+    }
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.layer == (int)LayerIndex.Platform)
+        {
+            transform.SetParent(null);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if (isDamageable)

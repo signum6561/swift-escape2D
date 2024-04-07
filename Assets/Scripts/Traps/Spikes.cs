@@ -6,7 +6,7 @@ public class Spikes : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.layer == (int)LayerIndex.Player)
         {
             IDamageable damageable = col.GetComponent<IDamageable>();
             damageable?.TakeDamage(1);

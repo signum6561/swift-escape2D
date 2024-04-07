@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 2826988432040793261}
   m_Layer: 7
   m_Name: Mask Dude
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -371,7 +371,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.031760454, y: -0.9677527}
+  m_Offset: {x: 0.0036723614, y: -0.9940423}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -382,7 +382,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.98393965, y: 0.1643219}
+  m_Size: {x: 0.8815017, y: 0.111742735}
   m_EdgeRadius: 0
 --- !u!1 &7214444999007941966
 GameObject:

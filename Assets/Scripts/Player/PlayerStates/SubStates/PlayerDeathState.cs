@@ -10,6 +10,7 @@ public class PlayerDeathState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.Col.enabled = false;
         player.ResetVelocity();
     }
     public override void LogicUpdate()
