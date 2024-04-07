@@ -290,20 +290,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
-  waitTime: 0.5
-  movementVelocity: 10
-  ledgeCheck: {fileID: 0}
-  wallCheck: {fileID: 4951885903756071686}
-  groundCheck: {fileID: 6663937628655898668}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  ledgeCheck: {fileID: 0}
+  wallCheck: {fileID: 4951885903756071686}
+  groundCheck: {fileID: 6663937628655898668}
   distanceLedgeCheck: 0.5
   distanceWallCheck: 0.5
   radiusGroundCheck: 0.6
+  waitTime: 0.5
+  movementVelocity: 8
+  clampMovementVelocity: 10
   jumpVelocity: 30
+  jumpDuration: 0.5
   heightCheck: {fileID: 2194737461499120278}
   distanceHeightCheck: 2

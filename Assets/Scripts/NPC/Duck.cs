@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Duck : GroundedEnemy
 {
+    [SerializeField] private float clampVelocity = 10f;
     [SerializeField] private float jumpVelocity = 20f;
     [SerializeField] private float jumpDuration = 0.5f;
     [SerializeField] private Transform heightCheck;
     [SerializeField] private float distanceHeightCheck = 3f;
     private bool isJumpEnterFinish;
     private float startJumpTime;
+    private float finalMovementVelocity;
     private bool alterJump;
     protected override void Start()
     {
@@ -48,7 +50,8 @@ public class Duck : GroundedEnemy
         SetVelocityY(jumpVelocity);
         if (!CheckWall())
         {
-            SetVelocityX(movementVelocity * FlipX);
+            finalMovementVelocity = Random.Range(movementVelocity, clampVelocity);
+            SetVelocityX(finalMovementVelocity * FlipX);
         }
         else
         {
