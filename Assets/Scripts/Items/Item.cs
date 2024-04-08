@@ -12,7 +12,7 @@ public class Item : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.layer == (int)LayerIndex.Player)
         {
             Player player = col.GetComponent<Player>();
             OnHitPlayerEnter(player);
