@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float health;
+    [SerializeField] private float health = 1;
 
     public Rigidbody2D Rb { get; private set; }
     public Animator Anim { get; private set; }
