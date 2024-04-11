@@ -7,7 +7,7 @@ public class Mushroom : GroundedEnemy
     protected override void Start()
     {
         base.Start();
-        InitializeState(State.Idle);
+        InitializeState(State.Move);
     }
     protected override void MoveUpdate()
     {
