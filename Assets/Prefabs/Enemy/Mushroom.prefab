@@ -226,19 +226,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 648dfb25502bfb84eb820e65e55ab0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  waitTime: 2
-  movementVelocity: 3
-  ledgeCheck: {fileID: 9151196827182249741}
-  wallCheck: {fileID: 324204871703517249}
+  health: 1
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  ledgeCheck: {fileID: 9151196827182249741}
+  wallCheck: {fileID: 324204871703517249}
+  groundCheck: {fileID: 0}
   distanceLedgeCheck: 0.5
   distanceWallCheck: 0.5
+  radiusGroundCheck: 0.5
+  waitTime: 2
+  movementVelocity: 3
 --- !u!1 &7624564776632984819
 GameObject:
   m_ObjectHideFlags: 0

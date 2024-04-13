@@ -28,11 +28,12 @@ public class Enemy : MonoBehaviour, IDamageable
     protected string currentAnim;
     public void SwitchState(State newState)
     {
-        if (!IsAlive)
-            return;
-        Anim.SetBool(currentAnim, false);
-        CurrentState = newState;
-        SelectEnterState();
+        if (IsAlive && newState != CurrentState)
+        {
+            Anim.SetBool(currentAnim, false);
+            CurrentState = newState;
+            SelectEnterState();
+        }
     }
     protected void InitializeState(State startState)
     {
@@ -153,7 +154,7 @@ public class Enemy : MonoBehaviour, IDamageable
         CurrentVelocity = Vector2.zero;
         Rb.velocity = CurrentVelocity;
     }
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (IsAlive)
         {
@@ -168,8 +169,13 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.layer == (int)LayerIndex.Player && IsAlive)
         {
-            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-            damageable?.TakeDamage(1);
+            OnHitPlayer(collision);
         }
     }
+    protected virtual void OnHitPlayer(Collision2D col)
+    {
+        IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
+        damageable?.TakeDamage(1);
+    }
+
 }
