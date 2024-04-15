@@ -9,7 +9,7 @@ using UnityEngine;
 public class ItemObject
 {
     public ItemType itemType;
-    public int ammount = 0;
+    public int ammount;
 }
 public class Box : MonoBehaviour
 {
@@ -34,6 +34,8 @@ public class Box : MonoBehaviour
     }
     private void DropItem()
     {
+        if (listItem.Count <= 0)
+            return;
         ItemObject randomItem = listItem[Random.Range(0, listItem.Count)];
         GameObject item = PoolManager.Instance.GetObject((ObjectType)randomItem.itemType);
         if (item != null)
