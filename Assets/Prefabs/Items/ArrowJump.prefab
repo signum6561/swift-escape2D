@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 6580182001535562017}
   - component: {fileID: 6805648084183910929}
   - component: {fileID: 4258738288748545683}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ArrowJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3757298803478740213
 Transform:
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1223098873
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 1173893978, guid: efb5b089e89dae646bccfd655167c418, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

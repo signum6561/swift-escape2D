@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ArrowJump : Item
 {
-    protected override void OnHitPlayerEnter(Player player)
+    protected override void OnHitPlayerEnter(Collider2D col)
     {
-        base.OnHitPlayerEnter(player);
-        player.JumpState.SetAmountOfJumps(1);
-        player.StateMachine.ChangeState(player.JumpState);
+        base.OnHitPlayerEnter(col);
+        IPushable pushable = col.GetComponent<IPushable>();
+        pushable?.AddForce(new Vector2(0, 30f));
     }
 }

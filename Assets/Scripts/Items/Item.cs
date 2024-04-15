@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    protected Animator anim;
+    public Animator Anim { get; private set; }
     protected bool isAnimationFinished;
     protected virtual void Start()
     {
-        anim = GetComponent<Animator>();
+        Anim = GetComponent<Animator>();
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.layer == (int)LayerIndex.Player)
         {
-            Player player = col.GetComponent<Player>();
-            OnHitPlayerEnter(player);
+            OnHitPlayerEnter(col);
         }
     }
-    protected virtual void OnHitPlayerEnter(Player player)
+    protected virtual void OnHitPlayerEnter(Collider2D col)
     {
-        anim.SetTrigger("hit");
+        Anim.SetTrigger("hit");
     }
-    public void TriggerAnimationFinished()
+    public virtual void TriggerAnimationFinished()
     {
         isAnimationFinished = true;
         gameObject.SetActive(false);

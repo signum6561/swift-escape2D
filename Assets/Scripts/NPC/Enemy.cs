@@ -140,13 +140,11 @@ public class Enemy : MonoBehaviour, IDamageable
     public void SetVelocityX(float velocity)
     {
         CurrentVelocity = new Vector2(velocity, CurrentVelocity.y);
-        // CurrentVelocity.Set(velocity, CurrentVelocity.y);
         Rb.velocity = CurrentVelocity;
     }
     public void SetVelocityY(float velocity)
     {
         CurrentVelocity = new Vector2(CurrentVelocity.y, velocity);
-        // CurrentVelocity.Set(CurrentVelocity.x, velocity);
         Rb.velocity = CurrentVelocity;
     }
     public void ResetVelocity()
