@@ -22,7 +22,7 @@ MonoBehaviour:
   variableJumpHeightMultipler: 4
   clampFallSpeed: 30
   wallSlideVelocity: 2
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.4
   wallCheckDistance: 1
   groundLayerMask:
     serializedVersion: 2

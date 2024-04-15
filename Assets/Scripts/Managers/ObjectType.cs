@@ -1,7 +1,11 @@
 public enum ObjectType
 {
     BulletPlant,
-    BulletTrunk
+    BulletTrunk,
+    BoxParts,
+    Apple,
+    Banana,
+    Melon,
 }
 
 

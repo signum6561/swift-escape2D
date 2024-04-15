@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour, IDamageable, IPushable
 {
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -85,6 +85,12 @@ public class Player : MonoBehaviour, IDamageable
     {
         angle.Normalize();
         workspace.Set(angle.x * velocity * direction, angle.y * velocity);
+        Rb.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
+    public void SetVelocity(Vector2 velocity)
+    {
+        workspace.Set(velocity.x, velocity.y);
         Rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
@@ -175,5 +181,10 @@ public class Player : MonoBehaviour, IDamageable
                 StateMachine.ChangeState(KnockbackState);
             }
         }
+    }
+
+    public void AddForce(Vector2 pushForce)
+    {
+        SetVelocity(pushForce);
     }
 }
