@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager Instance { get; private set; }
     [SerializeField] private List<PoolObjectInfo> listOfObjectPool;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,6 +34,7 @@ public class PoolManager : MonoBehaviour
             FillPool(info);
         }
     }
+
     private void FillPool(PoolObjectInfo info)
     {
         for (int i = 0; i < info.amount; i++)
