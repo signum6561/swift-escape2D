@@ -8,10 +8,12 @@ public class Chicken : GroundedEnemy
     [SerializeField] private Transform playerDetect;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Vector2 playerDetectRange;
+
     private readonly float detectionDelay = 0.1f;
     private bool isPlayerInRange;
     private Transform playerPos;
     private float distance;
+    private int direction;
     protected override void Start()
     {
         base.Start();
@@ -37,10 +39,11 @@ public class Chicken : GroundedEnemy
         base.MoveUpdate();
         if (isPlayerInRange)
         {
+            direction = playerPos.position.x < transform.position.x ? -1 : 1;
             distance = Vector2.Distance(transform.position, new Vector2(playerPos.position.x, transform.position.y));
-            HandleFlip(playerPos.position.x < transform.position.x ? -1 : 1);
             wallDetected = CheckWall();
             ledgeDetected = CheckLedge();
+            HandleFlip(direction);
             if (distance < 0.5f || wallDetected || !ledgeDetected)
             {
                 SwitchState(State.Idle);

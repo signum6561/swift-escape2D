@@ -303,7 +303,7 @@ MonoBehaviour:
   distanceWallCheck: 0.5
   radiusGroundCheck: 0.5
   waitTime: 2
-  movementVelocity: 8
+  movementVelocity: 10
   playerDetect: {fileID: 2283879986891790570}
   playerMask:
     serializedVersion: 2
