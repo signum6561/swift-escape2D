@@ -65,6 +65,10 @@ MonoBehaviour:
     amount: 0
     prefab: {fileID: 2588764974768136630, guid: 8caeefe82267df24a968c7c9261530a0, type: 3}
     pool: []
+  - type: 6
+    amount: 0
+    prefab: {fileID: 8191262354384531932, guid: 76fc6ee86912d4f419edb4124acd6e24, type: 3}
+    pool: []
   - type: 5
     amount: 0
     prefab: {fileID: 1277129561912200334, guid: cc44dfd0050ba1249aa51a8790dc1065, type: 3}

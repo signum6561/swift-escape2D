@@ -6,6 +6,7 @@ public enum ObjectType
     Apple,
     Banana,
     Melon,
+    Heart
 }
 
 

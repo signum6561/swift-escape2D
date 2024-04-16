@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 1677592209057388710}
   - component: {fileID: 6011830069774178056}
   - component: {fileID: 7409141427923955222}
+  - component: {fileID: 6136602853251780859}
   m_Layer: 8
   m_Name: Trunk
   m_TagString: Untagged
@@ -312,6 +313,19 @@ MonoBehaviour:
     m_Bits: 128
   playerDetectRange: 15
   attackDuration: 0.5
+--- !u!114 &6136602853251780859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033600416642702329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 225
 --- !u!1 &8417658598159901225
 GameObject:
   m_ObjectHideFlags: 0
