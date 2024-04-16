@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4418793442762124571}
   - component: {fileID: 1478160748472738063}
   - component: {fileID: 904333017142304460}
+  - component: {fileID: 5204317256910809932}
   m_Layer: 8
   m_Name: BlueBird
   m_TagString: Untagged
@@ -233,3 +234,16 @@ MonoBehaviour:
   radiusWallCheck: 0.5
   movementVelocity: 5
   waitTime: 2
+--- !u!114 &5204317256910809932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172445709645527891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 120

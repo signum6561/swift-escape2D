@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3210084268379155508}
   - component: {fileID: 5709819393529966313}
   - component: {fileID: 4804343022849908331}
+  - component: {fileID: -7362209815488948407}
   m_Layer: 10
   m_Name: Banana
   m_TagString: Untagged
@@ -194,8 +195,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473e169468fecce429848a16fd809e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 150
   fruitType: 4
+--- !u!114 &-7362209815488948407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588764974768136630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 100
 --- !u!1 &9066592322136351451
 GameObject:
   m_ObjectHideFlags: 0

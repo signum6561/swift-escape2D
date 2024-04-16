@@ -25,10 +25,12 @@ public class Chicken : GroundedEnemy
         base.IdleUpdate();
         if (isPlayerInRange)
         {
-            HandleFlip(playerPos.position.x - transform.position.x < 0 ? -1 : 1);
+            direction = playerPos.position.x < transform.position.x ? -1 : 1;
+            distance = Vector2.Distance(transform.position, new Vector2(playerPos.position.x, transform.position.y));
+            HandleFlip(direction);
             wallDetected = CheckWall();
             ledgeDetected = CheckLedge();
-            if (!wallDetected && ledgeDetected)
+            if (!wallDetected && ledgeDetected && distance > 0.5f)
             {
                 SwitchState(State.Move);
             }
@@ -39,7 +41,6 @@ public class Chicken : GroundedEnemy
         base.MoveUpdate();
         if (isPlayerInRange)
         {
-            direction = playerPos.position.x < transform.position.x ? -1 : 1;
             distance = Vector2.Distance(transform.position, new Vector2(playerPos.position.x, transform.position.y));
             wallDetected = CheckWall();
             ledgeDetected = CheckLedge();
@@ -76,8 +77,8 @@ public class Chicken : GroundedEnemy
     }
     protected override void DeadEnter()
     {
-        base.DeadEnter();
         StopAllCoroutines();
+        base.DeadEnter();
     }
     public override void OnDrawGizmosSelected()
     {

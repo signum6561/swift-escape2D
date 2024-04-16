@@ -109,8 +109,8 @@ public class Trunk : GroundedEnemy
     }
     protected override void DeadEnter()
     {
-        base.DeadEnter();
         StopAllCoroutines();
+        base.DeadEnter();
     }
     public override void OnDrawGizmosSelected()
     {

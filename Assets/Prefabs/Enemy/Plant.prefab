@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1222124013409713891}
   - component: {fileID: 4756915921306930050}
   - component: {fileID: 8540882305448683777}
+  - component: {fileID: 2650423127398474470}
   m_Layer: 8
   m_Name: Plant
   m_TagString: Untagged
@@ -217,6 +218,19 @@ MonoBehaviour:
     m_Bits: 128
   playerDetectRange: {x: 15, y: 5}
   attackDuration: 0.1
+--- !u!114 &2650423127398474470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166117695035496225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 275
 --- !u!1 &4623633295154260174
 GameObject:
   m_ObjectHideFlags: 0
