@@ -8,10 +8,12 @@ public class Chicken : GroundedEnemy
     [SerializeField] private Transform playerDetect;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private Vector2 playerDetectRange;
+
     private readonly float detectionDelay = 0.1f;
     private bool isPlayerInRange;
     private Transform playerPos;
     private float distance;
+    private int direction;
     protected override void Start()
     {
         base.Start();
@@ -23,10 +25,12 @@ public class Chicken : GroundedEnemy
         base.IdleUpdate();
         if (isPlayerInRange)
         {
-            HandleFlip(playerPos.position.x - transform.position.x < 0 ? -1 : 1);
+            direction = playerPos.position.x < transform.position.x ? -1 : 1;
+            distance = Vector2.Distance(transform.position, new Vector2(playerPos.position.x, transform.position.y));
+            HandleFlip(direction);
             wallDetected = CheckWall();
             ledgeDetected = CheckLedge();
-            if (!wallDetected && ledgeDetected)
+            if (!wallDetected && ledgeDetected && distance > 0.5f)
             {
                 SwitchState(State.Move);
             }
@@ -38,9 +42,9 @@ public class Chicken : GroundedEnemy
         if (isPlayerInRange)
         {
             distance = Vector2.Distance(transform.position, new Vector2(playerPos.position.x, transform.position.y));
-            HandleFlip(playerPos.position.x < transform.position.x ? -1 : 1);
             wallDetected = CheckWall();
             ledgeDetected = CheckLedge();
+            HandleFlip(direction);
             if (distance < 0.5f || wallDetected || !ledgeDetected)
             {
                 SwitchState(State.Idle);
@@ -73,8 +77,8 @@ public class Chicken : GroundedEnemy
     }
     protected override void DeadEnter()
     {
-        base.DeadEnter();
         StopAllCoroutines();
+        base.DeadEnter();
     }
     public override void OnDrawGizmosSelected()
     {

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1386529065656701220}
   - component: {fileID: 5620127331603447631}
   - component: {fileID: 5938858738534776810}
+  - component: {fileID: -1182000469790880496}
   m_Layer: 8
   m_Name: Turtle
   m_TagString: Untagged
@@ -195,3 +196,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   attackDuration: 1.5
+--- !u!114 &-1182000469790880496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655212203161388615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 150

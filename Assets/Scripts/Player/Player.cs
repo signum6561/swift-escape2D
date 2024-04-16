@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable, IPushable
+public class Player : MonoBehaviour, IPushable
 {
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -24,12 +24,9 @@ public class Player : MonoBehaviour, IDamageable, IPushable
     public int FlipX { get; private set; }
 
     private Vector2 workspace;
-    private bool isDamageable;
-    private Coroutine immortalCo;
-    public int Health { get; private set; }
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
-    [SerializeField] private PlayerData playerData;
+    public PlayerData playerData;
     public void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -43,16 +40,23 @@ public class Player : MonoBehaviour, IDamageable, IPushable
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "dead");
 
     }
+    private void OnEnable()
+    {
+        CameraManager.Instance.SetCameraTargetFollow(transform);
+        GameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
+    }
     private void Start()
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
         Col = GetComponent<BoxCollider2D>();
-        isDamageable = true;
         StateMachine.SetAlive(true);
         FlipX = 1;
-        Health = playerData.health;
         StateMachine.Initialize(IdleState);
     }
     private void Update()
@@ -117,18 +121,7 @@ public class Player : MonoBehaviour, IDamageable, IPushable
             transform.Rotate(0f, 180f, 0f);
         }
     }
-    public void SetImmortal()
-    {
-        if (immortalCo != null)
-            return;
-        immortalCo = StartCoroutine(ImmortalCo());
-    }
-    private IEnumerator ImmortalCo()
-    {
-        yield return new WaitForSeconds(.5f);
-        immortalCo = null;
-        isDamageable = true;
-    }
+
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
     public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
     void OnDrawGizmosSelected()
@@ -161,28 +154,13 @@ public class Player : MonoBehaviour, IDamageable, IPushable
             transform.SetParent(null);
         }
     }
-
-    public void TakeDamage(int damage)
+    private void OnGameStateChanged(GameState gameState)
     {
-        if (isDamageable)
+        if (gameState == GameState.Lose || gameState == GameState.Finish)
         {
-            Health--;
-            isDamageable = false;
-            SetImmortal();
-            if (Health <= 0)
-            {
-                Rb.bodyType = RigidbodyType2D.Kinematic;
-                StateMachine.ChangeState(DeathState);
-                StateMachine.SetAlive(false);
-
-            }
-            else
-            {
-                StateMachine.ChangeState(KnockbackState);
-            }
+            StateMachine.ChangeState(DeathState);
         }
     }
-
     public void AddForce(Vector2 pushForce)
     {
         SetVelocity(pushForce);

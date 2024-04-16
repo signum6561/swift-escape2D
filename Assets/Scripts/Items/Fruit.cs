@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Fruit : Item, IPushable
 {
-    [SerializeField] private int score;
     [SerializeField] private ItemType fruitType;
     public Rigidbody2D Rb { get; private set; }
     public void AddForce(Vector2 pushForce)

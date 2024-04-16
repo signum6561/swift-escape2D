@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private float health = 1;
+    public static event Action OnDead;
 
     public Rigidbody2D Rb { get; private set; }
     public Animator Anim { get; private set; }
@@ -114,6 +115,7 @@ public class Enemy : MonoBehaviour, IDamageable
     protected virtual void DeadEnter()
     {
         ResetVelocity();
+        OnDead?.Invoke();
         IsAlive = false;
         Col.enabled = false;
         Rb.AddForce(new Vector2(FlipX * 5f, 25f), ForceMode2D.Impulse);

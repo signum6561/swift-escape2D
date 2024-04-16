@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 2419245341084672744}
   - component: {fileID: 5607649725907572618}
   - component: {fileID: 2826988432040793261}
+  - component: {fileID: 7727926921428662675}
   m_Layer: 7
   m_Name: Mask Dude
   m_TagString: Untagged
@@ -158,8 +159,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 621328741
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 1401063229, guid: 825ca91b9d7eeb045a3433b05ce2e084, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -307,6 +308,18 @@ MonoBehaviour:
   groundCheck: {fileID: 5001733486540326247}
   wallCheck: {fileID: 2079781878241174232}
   playerData: {fileID: 11400000, guid: 99cfb658ef2d65e4586051ccfacdac8f, type: 2}
+--- !u!114 &7727926921428662675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013687477425313451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab8c64a5c733814787fa42e62acd258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6086129426686995147
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1057309495029917216}
   - component: {fileID: 3769945031937672353}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

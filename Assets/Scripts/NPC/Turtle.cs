@@ -22,8 +22,8 @@ public class Turtle : Enemy
     }
     protected override void DeadEnter()
     {
-        base.DeadEnter();
         StopAllCoroutines();
+        base.DeadEnter();
     }
     public override void TakeDamage(int damage)
     {

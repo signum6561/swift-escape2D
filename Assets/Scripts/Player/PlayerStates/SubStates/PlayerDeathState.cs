@@ -10,6 +10,8 @@ public class PlayerDeathState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        stateMachine.SetAlive(false);
+        player.Rb.bodyType = RigidbodyType2D.Kinematic;
         player.Col.enabled = false;
         player.ResetVelocity();
     }
