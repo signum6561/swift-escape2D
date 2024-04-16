@@ -296,7 +296,7 @@ MonoBehaviour:
     m_Bits: 64
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   ledgeCheck: {fileID: 8424312737404099824}
   wallCheck: {fileID: 3234214483779225375}
   groundCheck: {fileID: 0}
