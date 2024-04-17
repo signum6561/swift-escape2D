@@ -37,8 +37,6 @@ public class Timer : MonoBehaviour
                 isTimeOut = true;
             }
         }
-        GameManager.Instance.SwitchGameState(GameState.Lose);
-        timerCo = null;
     }
     private void UpdateTimer()
     {
@@ -48,8 +46,15 @@ public class Timer : MonoBehaviour
     }
     private void OnGameStateChanged(GameState gameState)
     {
-        if ((gameState == GameState.Lose || gameState == GameState.Finish) && !isTimeOut)
+        if (gameState == GameState.Finish && !isTimeOut)
         {
+            StopCoroutine(timerCo);
+            timerCo = null;
+            OnTimerStop?.Invoke(remainTime);
+        }
+        else if (gameState == GameState.Lose)
+        {
+            remainTime = 0;
             StopCoroutine(timerCo);
             timerCo = null;
             OnTimerStop?.Invoke(remainTime);
