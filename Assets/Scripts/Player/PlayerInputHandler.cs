@@ -37,6 +37,13 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInputStop = true;
         }
     }
+    public void OnPauseInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GUIManager.Instance.HandlePauseMenu();
+        }
+    }
     public void UseJumpInput() => JumpInput = false;
     private void CheckJumpInputHoldTime()
     {

@@ -31,7 +31,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
             if (Health <= 0)
             {
                 GameManager.Instance.SwitchGameState(GameState.Lose);
-                player.StateMachine.ChangeState(player.DeathState);
             }
             else
             {
