@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class GUIManager : MonoBehaviour
 {
+    public static event Action<int> OnTimerStop;
+    [SerializeField] private int startTimeRemain;
+    [SerializeField] private Timer timer;
     [SerializeField] private GameLogDisplay gameLog;
     [SerializeField] private GameObject pauseMenu;
     public static GUIManager Instance { get; private set; }
-    private bool isPlayerComplete;
     private bool isPaused;
     private void Awake()
     {
@@ -24,12 +26,10 @@ public class GUIManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnGameStateChanged += OnGameStateChanged;
-        AchivementManager.OnAchivementTimeRemainUpdate += OnAchivementTimeRemainUpdate;
     }
     private void OnDisable()
     {
         GameManager.OnGameStateChanged -= OnGameStateChanged;
-        AchivementManager.OnAchivementTimeRemainUpdate -= OnAchivementTimeRemainUpdate;
     }
     public void HandlePauseMenu()
     {
@@ -37,19 +37,26 @@ public class GUIManager : MonoBehaviour
         Time.timeScale = isPaused ? 0f : 1f;
         pauseMenu.SetActive(isPaused);
     }
-    private void OnGameStateChanged(GameState state)
+    private void OnGameStateChanged(GameState gameState)
     {
-        switch (state)
+        if (gameState == GameState.Finish && !timer.IsTimeOut)
         {
-            case GameState.Lose:
-                isPlayerComplete = false;
-                break;
-            case GameState.Finish:
-                isPlayerComplete = true;
-                break;
+            timer.StopTimer();
+            OnTimerStop?.Invoke(timer.TimeRemain);
+            HandleGameLog(true);
+        }
+        else if (gameState == GameState.Lose)
+        {
+            timer.StopTimer();
+            OnTimerStop?.Invoke(0);
+            HandleGameLog(false);
+        }
+        else if (gameState == GameState.Start && startTimeRemain > 0)
+        {
+            timer.StartTimer(startTimeRemain);
         }
     }
-    private void OnAchivementTimeRemainUpdate()
+    private void HandleGameLog(bool isPlayerComplete)
     {
         gameLog.DisplayAchivement(AchivementManager.Instance.AchivementData, isPlayerComplete);
         Invoke(nameof(DisplayGameLog), 1f);

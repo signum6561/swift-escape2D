@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLogDisplay : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameLogDisplay : MonoBehaviour
 
     [SerializeField] private TMP_Text timeRemain;
     [SerializeField] private TMP_Text finalScore;
+    [SerializeField] private Button buttonNext;
     private void SetEnemyCountText(int value)
     {
         enemyCount.text = value.ToString();
@@ -60,7 +62,15 @@ public class GameLogDisplay : MonoBehaviour
     }
     public void DisplayAchivement(Achivement achivement, bool isFinish)
     {
-        title.text = isFinish ? "LEVEL COMPLETE!" : "GAME OVER";
+        if (isFinish)
+        {
+            title.text = "LEVEL COMPLETE!";
+        }
+        else
+        {
+            title.text = "GAME OVER";
+            buttonNext.interactable = false;
+        }
         SetDiamondDisplay(achivement.diamonds);
         SetEnemyCountText(achivement.kills);
         SetAppleCountText(achivement.appleCount);

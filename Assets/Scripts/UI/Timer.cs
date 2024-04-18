@@ -6,62 +6,40 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public static event Action<int> OnTimerStop;
     [SerializeField] private TMP_Text timerTxt;
-    [SerializeField] private int remainTime;
+    public int TimeRemain { get; private set; }
+    public bool IsTimeOut { get; private set; }
     private int minutes;
     private int seconds;
     private Coroutine timerCo;
-    private bool isTimeOut;
-    private void OnEnable()
+    public void StartTimer(int timeRemain)
     {
-        GameManager.OnGameStateChanged += OnGameStateChanged;
-    }
-    private void OnDisable()
-    {
-        GameManager.OnGameStateChanged -= OnGameStateChanged;
-    }
-    private void Start()
-    {
+        TimeRemain = timeRemain;
         UpdateTimer();
+        timerCo = StartCoroutine(TimerCo());
     }
     private IEnumerator TimerCo()
     {
-        while (!isTimeOut)
+        while (!IsTimeOut)
         {
             yield return new WaitForSeconds(1);
-            remainTime--;
+            TimeRemain--;
             UpdateTimer();
-            if (remainTime <= 0)
+            if (TimeRemain <= 0)
             {
-                isTimeOut = true;
+                IsTimeOut = true;
             }
         }
     }
-    private void UpdateTimer()
+    public void UpdateTimer()
     {
-        minutes = (int)remainTime / 60;
-        seconds = (int)remainTime % 60;
+        minutes = (int)TimeRemain / 60;
+        seconds = (int)TimeRemain % 60;
         timerTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-    private void OnGameStateChanged(GameState gameState)
+    public void StopTimer()
     {
-        if (gameState == GameState.Finish && !isTimeOut)
-        {
-            StopCoroutine(timerCo);
-            timerCo = null;
-            OnTimerStop?.Invoke(remainTime);
-        }
-        else if (gameState == GameState.Lose)
-        {
-            remainTime = 0;
-            StopCoroutine(timerCo);
-            timerCo = null;
-            OnTimerStop?.Invoke(remainTime);
-        }
-        else if (gameState == GameState.Start && remainTime > 0)
-        {
-            timerCo = StartCoroutine(TimerCo());
-        }
+        StopCoroutine(timerCo);
+        timerCo = null;
     }
 }

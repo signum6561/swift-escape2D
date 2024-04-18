@@ -7,7 +7,6 @@ using UnityEngine;
 public class AchivementManager : MonoBehaviour
 {
     public static AchivementManager Instance { get; private set; }
-    public static event Action OnAchivementTimeRemainUpdate;
     public Achivement AchivementData { get; private set; }
     private void Awake()
     {
@@ -28,7 +27,7 @@ public class AchivementManager : MonoBehaviour
     {
         Enemy.OnDead += AddKill;
         Scoreable.OnScoreChanged += AddScore;
-        Timer.OnTimerStop += GetTimeRemain;
+        GUIManager.OnTimerStop += GetTimeRemain;
         Fruit.OnCollected += AddFruit;
         Diamond.OnCollected += AddDiamond;
     }
@@ -36,7 +35,7 @@ public class AchivementManager : MonoBehaviour
     {
         Enemy.OnDead -= AddKill;
         Scoreable.OnScoreChanged -= AddScore;
-        Timer.OnTimerStop -= GetTimeRemain;
+        GUIManager.OnTimerStop -= GetTimeRemain;
         Fruit.OnCollected -= AddFruit;
         Diamond.OnCollected -= AddDiamond;
     }
@@ -52,7 +51,6 @@ public class AchivementManager : MonoBehaviour
     private void GetTimeRemain(int value)
     {
         AchivementData.timeRemain = value;
-        OnAchivementTimeRemainUpdate?.Invoke();
     }
     private void AddFruit(ItemType fruitType)
     {
