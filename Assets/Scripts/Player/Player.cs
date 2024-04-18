@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour, IPushable
 {
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -19,15 +19,14 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerInputHandler InputHandler { get; private set; }
     public Animator Anim { get; private set; }
     public Rigidbody2D Rb { get; private set; }
+    public BoxCollider2D Col { get; private set; }
     public Vector2 CurrentVelocity { get; private set; }
     public int FlipX { get; private set; }
+
     private Vector2 workspace;
-    private bool isDamageable;
-    private Coroutine immortalCo;
-    public int Health { get; private set; }
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform wallCheck;
-    [SerializeField] private PlayerData playerData;
+    public PlayerData playerData;
     public void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -41,15 +40,24 @@ public class Player : MonoBehaviour, IDamageable
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "dead");
 
     }
+    private void OnEnable()
+    {
+        CameraManager.Instance.SetCameraTargetFollow(transform);
+        GameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChanged -= OnGameStateChanged;
+    }
     private void Start()
     {
         Anim = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
-        isDamageable = true;
+        Col = GetComponent<BoxCollider2D>();
+        StateMachine.SetAlive(true);
         FlipX = 1;
-        Health = playerData.health;
-        StateMachine.initialize(IdleState);
+        StateMachine.Initialize(IdleState);
     }
     private void Update()
     {
@@ -84,6 +92,12 @@ public class Player : MonoBehaviour, IDamageable
         Rb.velocity = workspace;
         CurrentVelocity = workspace;
     }
+    public void SetVelocity(Vector2 velocity)
+    {
+        workspace.Set(velocity.x, velocity.y);
+        Rb.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     public void ResetVelocity()
     {
         workspace.Set(0f, 0f);
@@ -107,18 +121,7 @@ public class Player : MonoBehaviour, IDamageable
             transform.Rotate(0f, 180f, 0f);
         }
     }
-    public void SetImmortal()
-    {
-        if (immortalCo != null)
-            return;
-        immortalCo = StartCoroutine(ImmortalCo());
-    }
-    private IEnumerator ImmortalCo()
-    {
-        yield return new WaitForSeconds(1f);
-        immortalCo = null;
-        isDamageable = true;
-    }
+
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
     public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
     void OnDrawGizmosSelected()
@@ -129,7 +132,7 @@ public class Player : MonoBehaviour, IDamageable
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.layer == (int)LayerIndex.Enemy)
         {
             JumpState.ResetAmountOfJumpLeft();
             StateMachine.ChangeState(JumpState);
@@ -137,22 +140,29 @@ public class Player : MonoBehaviour, IDamageable
             damageable?.TakeDamage(1);
         }
     }
-    public void TakeDamage(int damage)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (isDamageable)
+        if (col.gameObject.layer == (int)LayerIndex.Platform && StateMachine.CurrentState is PlayerGroundedState)
         {
-            Health--;
-            isDamageable = false;
-            SetImmortal();
-            if (Health <= 0)
-            {
-                Rb.bodyType = RigidbodyType2D.Kinematic;
-                StateMachine.ChangeState(DeathState);
-            }
-            else
-            {
-                StateMachine.ChangeState(KnockbackState);
-            }
+            transform.SetParent(col.transform);
         }
+    }
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.layer == (int)LayerIndex.Platform)
+        {
+            transform.SetParent(null);
+        }
+    }
+    private void OnGameStateChanged(GameState gameState)
+    {
+        if (gameState == GameState.Lose || gameState == GameState.Finish)
+        {
+            StateMachine.ChangeState(DeathState);
+        }
+    }
+    public void AddForce(Vector2 pushForce)
+    {
+        SetVelocity(pushForce);
     }
 }

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6628759769957945925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6302431691927843855}
+  - component: {fileID: 4755701913016400817}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6302431691927843855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628759769957945925}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4755701913016400817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628759769957945925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6816a9daa59b17f40a3bb37edc12f3c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listOfObjectPool:
+  - type: 0
+    amount: 5
+    prefab: {fileID: 1988394722460944857, guid: e3c3849f51671e74bbd4a5e8ee93d6a3, type: 3}
+    pool: []
+  - type: 1
+    amount: 5
+    prefab: {fileID: 6098092383818100684, guid: 186aa1529dafbf84bb02318b96e89f06, type: 3}
+    pool: []
+  - type: 2
+    amount: 5
+    prefab: {fileID: 7829054186466089663, guid: c8dac424b62e5dd4cb09bb725d28a95e, type: 3}
+    pool: []
+  - type: 3
+    amount: 0
+    prefab: {fileID: 7206810253370813044, guid: 01d63ec97d30e5341936d4e72c17b460, type: 3}
+    pool: []
+  - type: 4
+    amount: 0
+    prefab: {fileID: 2588764974768136630, guid: 8caeefe82267df24a968c7c9261530a0, type: 3}
+    pool: []
+  - type: 6
+    amount: 0
+    prefab: {fileID: 8191262354384531932, guid: 76fc6ee86912d4f419edb4124acd6e24, type: 3}
+    pool: []
+  - type: 5
+    amount: 0
+    prefab: {fileID: 1277129561912200334, guid: cc44dfd0050ba1249aa51a8790dc1065, type: 3}
+    pool: []

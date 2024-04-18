@@ -5,15 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float health;
-    [SerializeField] private Transform ledgeCheck;
-    [SerializeField] private Transform wallCheck;
-
-    [SerializeField] private float distanceLedgeCheck = 0.5f;
-    [SerializeField] private float distanceWallCheck = 0.5f;
-    [SerializeField] private LayerMask groundLayerMask;
-    [SerializeField] private LayerMask wallLayerMask;
-    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private float health = 1;
+    public static event Action OnDead;
 
     public Rigidbody2D Rb { get; private set; }
     public Animator Anim { get; private set; }
@@ -30,13 +23,26 @@ public class Enemy : MonoBehaviour, IDamageable
         Move,
         Attack,
         Dead,
+        InAir
     };
     public State CurrentState { get; private set; }
-    protected string currentAnim = "idle";
+    protected string currentAnim;
     public void SwitchState(State newState)
     {
-        Anim.SetBool(currentAnim, false);
-        CurrentState = newState;
+        if (IsAlive && newState != CurrentState)
+        {
+            Anim.SetBool(currentAnim, false);
+            CurrentState = newState;
+            SelectEnterState();
+        }
+    }
+    protected void InitializeState(State startState)
+    {
+        CurrentState = startState;
+        SelectEnterState();
+    }
+    private void SelectEnterState()
+    {
         switch (CurrentState)
         {
             case State.Idle:
@@ -54,6 +60,10 @@ public class Enemy : MonoBehaviour, IDamageable
             case State.Dead:
                 currentAnim = "dead";
                 DeadEnter();
+                break;
+            case State.InAir:
+                currentAnim = "inAir";
+                InAirEnter();
                 break;
         }
         Anim.SetBool(currentAnim, true);
@@ -73,6 +83,7 @@ public class Enemy : MonoBehaviour, IDamageable
     }
     protected virtual void Update()
     {
+        CurrentVelocity = Rb.velocity;
         switch (CurrentState)
         {
             case State.Idle:
@@ -87,6 +98,9 @@ public class Enemy : MonoBehaviour, IDamageable
             case State.Dead:
                 DeadUpdate();
                 break;
+            case State.InAir:
+                InAirUpdate();
+                break;
         }
     }
     protected virtual void FixedUpdate() { }
@@ -96,9 +110,12 @@ public class Enemy : MonoBehaviour, IDamageable
     protected virtual void MoveUpdate() { }
     protected virtual void AttackEnter() { }
     protected virtual void AttackUpdate() { }
+    protected virtual void InAirEnter() { }
+    protected virtual void InAirUpdate() { }
     protected virtual void DeadEnter()
     {
         ResetVelocity();
+        OnDead?.Invoke();
         IsAlive = false;
         Col.enabled = false;
         Rb.AddForce(new Vector2(FlipX * 5f, 25f), ForceMode2D.Impulse);
@@ -114,18 +131,6 @@ public class Enemy : MonoBehaviour, IDamageable
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
-    public bool CheckLedge()
-    {
-        return Physics2D.Raycast(ledgeCheck.position, Vector2.down, distanceLedgeCheck, groundLayerMask);
-    }
-    public bool CheckWall()
-    {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * FlipX, distanceWallCheck, wallLayerMask);
-    }
-    public bool DetectPlayer()
-    {
-        return Physics2D.Raycast(wallCheck.position, Vector2.right * FlipX, distanceWallCheck, playerLayerMask);
-    }
     public void HandleFlip(int value)
     {
         if (value != 0 && value != FlipX)
@@ -137,13 +142,11 @@ public class Enemy : MonoBehaviour, IDamageable
     public void SetVelocityX(float velocity)
     {
         CurrentVelocity = new Vector2(velocity, CurrentVelocity.y);
-        // CurrentVelocity.Set(velocity, CurrentVelocity.y);
         Rb.velocity = CurrentVelocity;
     }
     public void SetVelocityY(float velocity)
     {
         CurrentVelocity = new Vector2(CurrentVelocity.y, velocity);
-        // CurrentVelocity.Set(CurrentVelocity.x, velocity);
         Rb.velocity = CurrentVelocity;
     }
     public void ResetVelocity()
@@ -151,7 +154,7 @@ public class Enemy : MonoBehaviour, IDamageable
         CurrentVelocity = Vector2.zero;
         Rb.velocity = CurrentVelocity;
     }
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (IsAlive)
         {
@@ -164,15 +167,15 @@ public class Enemy : MonoBehaviour, IDamageable
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && IsAlive)
+        if (collision.gameObject.layer == (int)LayerIndex.Player && IsAlive)
         {
-            IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-            damageable?.TakeDamage(1);
+            OnHitPlayer(collision);
         }
     }
-    public virtual void OnDrawGizmosSelected()
+    protected virtual void OnHitPlayer(Collision2D col)
     {
-        Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + (Vector3)(distanceLedgeCheck * Vector2.down));
-        Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(FlipX * distanceWallCheck * Vector2.right));
+        IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
+        damageable?.TakeDamage(1);
     }
+
 }
