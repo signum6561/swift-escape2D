@@ -8,7 +8,6 @@ public enum GameState
     Start,
     Progess,
     Lose,
-    Pause,
     Finish
 }
 

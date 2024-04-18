@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AchivementManager : MonoBehaviour
 {
     public static AchivementManager Instance { get; private set; }
-    private int kills;
-    private int score;
-    private int remainTime;
+    public Achivement AchivementData { get; private set; }
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -19,27 +19,52 @@ public class AchivementManager : MonoBehaviour
             Instance = this;
         }
     }
+    private void Start()
+    {
+        AchivementData = new Achivement();
+    }
     private void OnEnable()
     {
         Enemy.OnDead += AddKill;
         Scoreable.OnScoreChanged += AddScore;
-        Timer.OnTimerStop += GetTimeRemain;
+        GUIManager.OnTimerStop += GetTimeRemain;
+        Fruit.OnCollected += AddFruit;
+        Diamond.OnCollected += AddDiamond;
     }
     private void OnDisable()
     {
         Enemy.OnDead -= AddKill;
         Scoreable.OnScoreChanged -= AddScore;
-        Timer.OnTimerStop -= GetTimeRemain;
+        GUIManager.OnTimerStop -= GetTimeRemain;
+        Fruit.OnCollected -= AddFruit;
+        Diamond.OnCollected -= AddDiamond;
     }
-    private void AddKill() => kills++;
-    private void AddScore(int value) => score += value;
-    private void GetTimeRemain(int value) => remainTime = value;
-    public int GetBonus()
+    private void AddKill() => AchivementData.kills++;
+    private void AddScore(int value) => AchivementData.score += value;
+    private void AddDiamond()
     {
-        return remainTime * 100;
+        if (AchivementData.diamonds < 3)
+        {
+            AchivementData.diamonds++;
+        }
     }
-    public int GetFinalScore()
+    private void GetTimeRemain(int value)
     {
-        return score + GetBonus();
+        AchivementData.timeRemain = value;
+    }
+    private void AddFruit(ItemType fruitType)
+    {
+        switch (fruitType)
+        {
+            case ItemType.Apple:
+                AchivementData.appleCount++;
+                break;
+            case ItemType.Banana:
+                AchivementData.bananaCount++;
+                break;
+            case ItemType.Melon:
+                AchivementData.melonCount++;
+                break;
+        }
     }
 }

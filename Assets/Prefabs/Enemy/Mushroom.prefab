@@ -233,7 +233,7 @@ MonoBehaviour:
     m_Bits: 64
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   ledgeCheck: {fileID: 9151196827182249741}
   wallCheck: {fileID: 324204871703517249}
   groundCheck: {fileID: 0}
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a739fe22413b6459007dedb61d5412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: 100
+  points: 200
 --- !u!1 &7624564776632984819
 GameObject:
   m_ObjectHideFlags: 0
