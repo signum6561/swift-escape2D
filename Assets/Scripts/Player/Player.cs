@@ -121,7 +121,10 @@ public class Player : MonoBehaviour, IPushable
             transform.Rotate(0f, 180f, 0f);
         }
     }
-
+    public void PlaySound(string name)
+    {
+        AudioManager.Instance.PlaySFX(name, SoundType.Player);
+    }
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();
     public void TriggerAnimationExit() => StateMachine.CurrentState.TriggerAnimationExit();
     void OnDrawGizmosSelected()

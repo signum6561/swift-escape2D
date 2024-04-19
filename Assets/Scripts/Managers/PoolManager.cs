@@ -11,22 +11,9 @@ public class PoolObjectInfo
     public GameObject prefab;
     public List<GameObject> pool = new();
 }
-public class PoolManager : MonoBehaviour
+public class PoolManager : Singleton<PoolManager>
 {
-    public static PoolManager Instance { get; private set; }
     [SerializeField] private List<PoolObjectInfo> listOfObjectPool;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
     private void Start()
     {
         foreach (PoolObjectInfo info in listOfObjectPool)

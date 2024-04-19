@@ -12,6 +12,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     public static GUIManager Instance { get; private set; }
     private bool isPaused;
+    private GameObject currentPanel;
     private void Awake()
     {
         if (Instance != null && Instance != this)
