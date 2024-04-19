@@ -1065,7 +1065,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerTxt: {fileID: 2520737651080191670}
-  remainTime: 120
 --- !u!1 &1040772781886337569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4507,6 +4506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db69f22e6228d2748b2d5c56925ca06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTimeRemain: 120
+  timer: {fileID: 645357014084208801}
   gameLog: {fileID: 2557503368827994318}
   pauseMenu: {fileID: 2962394088207651513}
 --- !u!1 &8221402823841385751
@@ -5054,3 +5055,4 @@ MonoBehaviour:
   score: {fileID: 164478869937662647}
   timeRemain: {fileID: 2031573803093154562}
   finalScore: {fileID: 8121355143947806928}
+  buttonNext: {fileID: 6659643572363590735}
