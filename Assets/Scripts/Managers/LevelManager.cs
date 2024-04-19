@@ -1,20 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
-    public static LevelManager Instance { get; private set; }
-    private void Awake()
+    private int currentLevel;
+    private GameObject playerPrefab;
+    private void OnEnable()
     {
-        if (Instance != null)
+        DontDestroyOnLoad(gameObject);
+    }
+    public void LoadScene(string sceneName)
+    {
+        StartCoroutine(LoadSceneCo(sceneName));
+    }
+    public void LoadLevelScene(int levelIndex)
+    {
+        string sceneName = "Level" + levelIndex.ToString();
+        currentLevel = levelIndex;
+        StartCoroutine(LoadSceneCo(sceneName));
+    }
+    public void ReloadScene()
+    {
+        StartCoroutine(LoadSceneCo("Level" + currentLevel));
+    }
+    public void NextLevel()
+    {
+        currentLevel++;
+        LoadLevelScene(currentLevel);
+    }
+    public GameObject PlayerPrefab
+    {
+        get { return playerPrefab; }
+        set
         {
-            Destroy(this);
+            if (value != null)
+            {
+                playerPrefab = value;
+            }
         }
-        else
+    }
+    private IEnumerator LoadSceneCo(string sceneName)
+    {
+        Transitor.Instance.StartTransition();
+        Time.timeScale = 1f;
+        AsyncOperation scene = SceneManager.LoadSceneAsync(sceneName);
+        scene.allowSceneActivation = false;
+        do
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            yield return new WaitForSeconds(0.1f);
         }
+        while (scene.progress < 0.9f);
+        yield return new WaitForSeconds(1f);
+        scene.allowSceneActivation = true;
+        GameManager.Instance.StartEnterLevel();
     }
 }

@@ -6,9 +6,9 @@ public class StartPoint : MonoBehaviour
 {
     public static StartPoint Instance { get; private set; }
     public Animator Anim { get; private set; }
-    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform spawnPos;
     private bool isAnimationFinished;
+    private GameObject playerPrefab;
 
     private void Awake()
     {
@@ -42,9 +42,13 @@ public class StartPoint : MonoBehaviour
     {
         if (gameState == GameState.Start)
         {
-            Anim.SetTrigger("spawn");
-            GameManager.Instance.SwitchGameState(GameState.Progess);
-            GameManager.OnGameStateChanged -= OnGameStateChanged;
+            playerPrefab = LevelManager.Instance.PlayerPrefab;
+            if (playerPrefab != null)
+            {
+                Anim.SetTrigger("spawn");
+                GameManager.Instance.SwitchGameState(GameState.Progess);
+                GameManager.OnGameStateChanged -= OnGameStateChanged;
+            }
         }
     }
     public void TriggerAnimationFinished() => isAnimationFinished = true;

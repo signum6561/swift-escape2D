@@ -4,21 +4,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class AchivementManager : MonoBehaviour
+public class AchivementManager : Singleton<AchivementManager>
 {
-    public static AchivementManager Instance { get; private set; }
     public Achivement AchivementData { get; private set; }
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
     private void Start()
     {
         AchivementData = new Achivement();

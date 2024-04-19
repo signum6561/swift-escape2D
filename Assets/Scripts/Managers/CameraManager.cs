@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
-    public static CameraManager Instance { get; private set; }
-    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     public void SetCameraTargetFollow(Transform target) => cinemachineVirtualCamera.Follow = target;
 }
