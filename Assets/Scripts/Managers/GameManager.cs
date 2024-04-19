@@ -5,40 +5,34 @@ using UnityEngine;
 
 public enum GameState
 {
+    CharacterSelection,
+    LevelSelection,
     Start,
     Progess,
     Lose,
     Finish
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public GameState CurrentGameState { get; private set; }
-    public static GameManager Instance { get; private set; }
     public static event Action<GameState> OnGameStateChanged;
-    private void Awake()
+    private void OnEnable()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-    private void Start()
-    {
-        StartCoroutine(EnterLevel());
+        DontDestroyOnLoad(gameObject);
     }
     public void SwitchGameState(GameState newState)
     {
         CurrentGameState = newState;
         OnGameStateChanged?.Invoke(newState);
     }
+    public void StartEnterLevel()
+    {
+        StartCoroutine(EnterLevel());
+    }
     private IEnumerator EnterLevel()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SwitchGameState(GameState.Start);
     }
 }
