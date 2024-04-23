@@ -22,6 +22,7 @@ public class Heart : Item, IPushable
     protected override void OnHitPlayerEnter(Collider2D col)
     {
         base.OnHitPlayerEnter(col);
+        AudioManager.Instance.PlaySFX("powerUp", SoundType.Other);
         IHealable healable = col.GetComponent<IHealable>();
         healable?.Heal();
     }

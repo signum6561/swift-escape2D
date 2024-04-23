@@ -47,6 +47,7 @@ public class PlayerInAirState : PlayerState
                 player.Anim.SetTrigger("doubleJump");
             }
             player.InputHandler.UseJumpInput();
+            player.PlaySound("jump");
             stateMachine.ChangeState(player.JumpState);
         }
         else if (isTouchingWall && inputX == player.FlipX && player.CurrentVelocity.y <= 0)

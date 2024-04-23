@@ -10,14 +10,6 @@ public class Transitor : Singleton<Transitor>
     {
         DontDestroyOnLoad(gameObject);
     }
-    public void StartTransition()
-    {
-        StartCoroutine(TransitionCo());
-    }
-    private IEnumerator TransitionCo()
-    {
-        anim.SetTrigger("transIn");
-        yield return new WaitForSeconds(duration);
-        anim.SetTrigger("transOut");
-    }
+    public void StartTransition() => anim.SetTrigger("transIn");
+    public void EndTransition() => anim.SetTrigger("transOut");
 }

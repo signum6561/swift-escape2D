@@ -18,9 +18,15 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private SoundSO music;
     private void OnEnable()
     {
+        SettingManager.OnSFXVolumeChange += ChangeSFXVolume;
+        SettingManager.OnMusicVolumeChange += ChangeMusicVolume;
         DontDestroyOnLoad(gameObject);
     }
-
+    private void OnDisable()
+    {
+        SettingManager.OnSFXVolumeChange -= ChangeSFXVolume;
+        SettingManager.OnMusicVolumeChange -= ChangeMusicVolume;
+    }
     public void ChangeMusicVolume(float value)
     {
         musicSource.volume = value;

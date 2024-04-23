@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class PlayerKnockbackState : PlayerState, IKnockable
@@ -12,6 +11,7 @@ public class PlayerKnockbackState : PlayerState, IKnockable
     public override void Enter()
     {
         base.Enter();
+        player.PlaySound("takeDamage");
         KnockBack(targetPos, playerData.knockbackForce, 1);
     }
     public override void LogicUpdate()

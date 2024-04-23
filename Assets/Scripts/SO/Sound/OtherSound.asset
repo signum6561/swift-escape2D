@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f1429932d793d4d87ed8e1a05d6f32, type: 3}
   m_Name: OtherSound
   m_EditorClassIdentifier: 
-  soundList: []
+  soundList:
+  - soundName: powerUp
+    audioClip: {fileID: 8300000, guid: 765b713374407b440bcb6c9209fe89da, type: 3}

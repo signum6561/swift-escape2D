@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundList:
   - soundName: jump
-    audioClip: {fileID: 8300000, guid: d5875b5b95739cd45b8cfa761d0906f8, type: 3}
-  - soundName: land
-    audioClip: {fileID: 8300000, guid: f9dc0db0b6891274c9f79d64f8e80c30, type: 3}
+    audioClip: {fileID: 8300000, guid: 5a0fc99739cd51a41bcd4bc89cbdc394, type: 3}
   - soundName: dead
-    audioClip: {fileID: 8300000, guid: 37c2ff1013025f34b9a5f4b0f0adbc36, type: 3}
+    audioClip: {fileID: 8300000, guid: 31122e7b4ae944245ae1c05e930bce83, type: 3}
+  - soundName: takeDamage
+    audioClip: {fileID: 8300000, guid: c5a6bb9c6d3ceef40a8ad337bfdbdd63, type: 3}

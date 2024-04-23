@@ -42,7 +42,6 @@ public class Player : MonoBehaviour, IPushable
     }
     private void OnEnable()
     {
-        CameraManager.Instance.SetCameraTargetFollow(transform);
         GameManager.OnGameStateChanged += OnGameStateChanged;
     }
     private void OnDisable()
@@ -55,6 +54,7 @@ public class Player : MonoBehaviour, IPushable
         InputHandler = GetComponent<PlayerInputHandler>();
         Rb = GetComponent<Rigidbody2D>();
         Col = GetComponent<BoxCollider2D>();
+        CameraManager.Instance.SetCameraTargetFollow(transform);
         StateMachine.SetAlive(true);
         FlipX = 1;
         StateMachine.Initialize(IdleState);
@@ -123,6 +123,10 @@ public class Player : MonoBehaviour, IPushable
     }
     public void PlaySound(string name)
     {
+        if (AudioManager.Instance == null)
+        {
+            return;
+        }
         AudioManager.Instance.PlaySFX(name, SoundType.Player);
     }
     public void TriggerAnimationEnter() => StateMachine.CurrentState.TriggerAnimationEnter();

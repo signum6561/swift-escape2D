@@ -53,6 +53,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         while (scene.progress < 0.9f);
         yield return new WaitForSeconds(1f);
+        Transitor.Instance.EndTransition();
         scene.allowSceneActivation = true;
         GameManager.Instance.StartEnterLevel();
     }

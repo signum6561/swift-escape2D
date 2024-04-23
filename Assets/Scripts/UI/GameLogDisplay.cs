@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameLogDisplay : MonoBehaviour
@@ -62,6 +63,10 @@ public class GameLogDisplay : MonoBehaviour
     }
     public void DisplayAchivement(Achivement achivement, bool isFinish)
     {
+        if (SceneManager.GetActiveScene().name == "Level3")
+        {
+            buttonNext.interactable = false;
+        }
         if (isFinish)
         {
             title.text = "LEVEL COMPLETE!";
@@ -71,6 +76,7 @@ public class GameLogDisplay : MonoBehaviour
             title.text = "GAME OVER";
             buttonNext.interactable = false;
         }
+
         SetDiamondDisplay(achivement.diamonds);
         SetEnemyCountText(achivement.kills);
         SetAppleCountText(achivement.appleCount);

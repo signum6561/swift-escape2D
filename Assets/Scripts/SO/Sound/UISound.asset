@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundList:
   - soundName: playClick
-    audioClip: {fileID: 8300000, guid: bde6cdb49df3652419ca88fb7789a704, type: 3}
+    audioClip: {fileID: 8300000, guid: f863049a9604c7044a5b4b84d02c3610, type: 3}
+  - soundName: victory
+    audioClip: {fileID: 8300000, guid: 20f0917cc274345469fae81a29308679, type: 3}
+  - soundName: gameOver
+    audioClip: {fileID: 8300000, guid: 32b37a603d06700498dcfcf093dbaa7f, type: 3}

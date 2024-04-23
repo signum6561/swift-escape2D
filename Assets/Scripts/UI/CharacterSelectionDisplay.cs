@@ -10,10 +10,13 @@ public class CharacterSelectionDisplay : MonoBehaviour
     private int selectedOption;
     private CharacterListSO charactersSO;
     private int characterCount;
+    private string currentSample = "md";
     private void UpdateCharacterDisplay(Character character)
     {
         characterName.text = character.name;
-        anim.runtimeAnimatorController = character.animController;
+        anim.SetBool(currentSample, false);
+        currentSample = character.animID;
+        anim.SetBool(currentSample, true);
     }
     public void InitializeSelection(CharacterListSO charactersSO)
     {

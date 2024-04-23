@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38050187185292448f824ac4b69307d, type: 3}
   m_Name: NinjaFrogData
   m_EditorClassIdentifier: 
-  health: 3
+  health: 5
   movementVelocity: 12
   jumpVelocity: 20
   doubleJumpVelocity: 20
